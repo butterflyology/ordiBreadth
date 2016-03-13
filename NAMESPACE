@@ -1,0 +1,4 @@
+export(ordi.breadth,dist.group.plot,summaryordi,profPlot,hyp.ordi.breadth,ordi.focal.drop,null.breadth,summaryhbreadth,null.breadth.focal,null.breadth.focal.summary,focal.profPlot)
+import(vegan)
+importFrom("graphics", "mtext", "plot", "points", "segments", "text")
+importFrom("stats", "median", "optim", "quantile")
