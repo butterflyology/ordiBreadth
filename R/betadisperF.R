@@ -1,12 +1,8 @@
-betadisperF <-
-function (d, group, type = c("median", "centroid"), bias.adjust = FALSE) 
-{
-	#modification of betadisper function (Gavin L. Simpson; bias correction by Adrian Stier and Ben Bolker.) from the Package vegan v2.0-4 (Oksanen & Simpson)
+betadisperF <- function (d, group, type = c("median", "centroid"), bias.adjust = FALSE) {
+#modification of betadisper function (Gavin L. Simpson; bias correction by Adrian Stier and Ben Bolker.) from the Package vegan v2.0-4 (Oksanen & Simpson)
 
-
-ordimedian<-function (ord, groups, display = "sites", label = FALSE, ...) 
-{
-    medfun <- function(x, ord) sum(sqrt(rowSums(sweep(ord, 2, 
+ordimedian<-function (ord, groups, display = "sites", label = FALSE, ...) {
+    medfun <- function(x, ord) sum(sqrt(rowSums(sweep(ord, 2,
         x)^2)), na.rm = TRUE)
     dmedfun <- function(x, ord) {
         up <- -sweep(ord, 2, x)
@@ -20,39 +16,33 @@ ordimedian<-function (ord, groups, display = "sites", label = FALSE, ...)
     colnames(medians) <- colnames(pts)
     for (i in inds) {
         X <- pts[groups == i, , drop = FALSE]
-        if (NROW(X) > 0) 
-            medians[i, ] <- optim(apply(X, 2, median, na.rm = TRUE), 
-                fn = medfun, gr = dmedfun, ord = X, method = "BFGS")$par
-        if (label) 
-            ordiArgAbsorber(medians[i, 1], medians[i, 2], label = i, 
+        if (NROW(X) > 0)
+            medians[i, ] <- optim(apply(X, 2, median, na.rm = TRUE), fn = medfun, gr = dmedfun, ord = X, method = "BFGS")$par
+        if (label)
+            ordiArgAbsorber(medians[i, 1], medians[i, 2], label = i,
                 FUN = text, ...)
     }
     invisible(medians)
 }
 
-	
-ordiArgAbsorber<-function(..., shrink, origin, scaling, triangular, display, 
-    choices, const, FUN) 
-match.fun(FUN)(...)	
+ordiArgAbsorber<-function(..., shrink, origin, scaling, triangular, display,
+    choices, const, FUN)
+match.fun(FUN)(...)
 
 "scores" <-function(x, ...) UseMethod("scores")
-
-	
-"scores.default" <-
-    function (x, choices, display = c("sites", "species"), ...) 
-{
+"scores.default" <- function (x, choices, display = c("sites", "species"), ...) {
     display <- match.arg(display)
     att <- names(x)
     if (is.data.frame(x) && all(sapply(x, is.numeric)))
         x <- as.matrix(x)
     if (is.list(x) && display == "sites") {
-        if ("points" %in% att) 
+        if ("points" %in% att)
             X <- x$points
-        else if ("rproj" %in% att) 
+        else if ("rproj" %in% att)
             X <- x$rproj
-        else if ("x" %in% att) 
+        else if ("x" %in% att)
             X <- x$x
-        else if ("scores" %in% att) 
+        else if ("scores" %in% att)
             X <- x$scores
         else if ("sites" %in% att)
             X <- x$sites
@@ -65,11 +55,11 @@ match.fun(FUN)(...)
     else if (is.list(x) && display == "species") {
         if ("species" %in% att)
             X <- x$species
-        else if ("cproj" %in% att) 
+        else if ("cproj" %in% att)
             X <- x$cproj
-        else if ("rotation" %in% att) 
+        else if ("rotation" %in% att)
             X <- x$rotation
-        else if ("loadings" %in% att) 
+        else if ("loadings" %in% att)
             X <- x$loadings
         else if ("co" %in% att)
             X <- x$co
@@ -84,7 +74,7 @@ match.fun(FUN)(...)
         root <- substr(display, 1, 4)
         rownames(X) <- paste(root, 1:nrow(X), sep = "")
     }
-    if (is.null(colnames(X))) 
+    if (is.null(colnames(X)))
         colnames(X) <- paste("Dim", 1:ncol(X), sep = "")
     if (!missing(choices)) {
         choices <- choices[choices <= ncol(X)]
@@ -93,29 +83,8 @@ match.fun(FUN)(...)
     X <- as.matrix(X)
     X
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	    dblcen <- function(x, na.rm = TRUE) {
         cnt <- colMeans(x, na.rm = na.rm)
         x <- sweep(x, 2L, cnt, check.margin = FALSE)
@@ -124,7 +93,6 @@ match.fun(FUN)(...)
     }
 
 
-    
     spatialMed <- function(vectors, group, pos) {
         axes <- seq_len(NCOL(vectors))
         spMedPos <- ordimedian(vectors, group, choices = axes[pos])
@@ -132,17 +100,17 @@ match.fun(FUN)(...)
         cbind(spMedPos, spMedNeg)
     }
     Resids <- function(x, c) {
-        if (is.matrix(c)) 
+        if (is.matrix(c))
             d <- x - c
         else d <- sweep(x, 2, c)
         rowSums(d^2)
     }
     TOL <- 1e-07
-    if (!inherits(d, "dist")) 
+    if (!inherits(d, "dist"))
         stop("distances 'd' must be a 'dist' object")
-    if (any(d < -TOL, na.rm = TRUE)) 
+    if (any(d < -TOL, na.rm = TRUE))
         stop("dissimilarities 'd' must be non-negative")
-    if (missing(type)) 
+    if (missing(type))
         type <- "median"
     type <- match.arg(type)
     if (!is.factor(group)) {
@@ -170,37 +138,32 @@ match.fun(FUN)(...)
         warning("Missing observations due to 'd' removed.")
     }
     x <- x + t(x)
- x<- dblcen(x)
+    x <- dblcen(x)
     e <- eigen(-x/2, symmetric = TRUE)
     vectors <- e$vectors
     eig <- e$values
     eig <- eig[(want <- abs(eig/eig[1]) > TOL)]
-    vectors <- vectors[, want, drop = FALSE] %*% diag(sqrt(abs(eig)), 
-        nrow = length(eig))
+    vectors <- vectors[, want, drop = FALSE] %*% diag(sqrt(abs(eig)), nrow = length(eig))
     pos <- eig > 0
     centroids <- switch(type, centroid = apply(vectors, 2, function(x) tapply(x,group, mean)), median = spatialMed(vectors, group, pos))
     if(is.matrix(centroids)==FALSE){
     centroids<-t(as.matrix(centroids))
     rownames(centroids)<-"YES"}
-    dist.pos <- Resids(vectors[, pos, drop = FALSE], centroids[group, 
-        pos, drop = FALSE])
+    dist.pos <- Resids(vectors[, pos, drop = FALSE], centroids[group, pos, drop = FALSE])
     dist.neg <- 0
-    if (any(!pos)) 
-        dist.neg <- Resids(vectors[, !pos, drop = FALSE], centroids[group, 
-            !pos, drop = FALSE])
+    if (any(!pos))
+        dist.neg <- Resids(vectors[, !pos, drop = FALSE], centroids[group, !pos, drop = FALSE])
     zij <- sqrt(abs(dist.pos - dist.neg))
     if (bias.adjust) {
         n.group <- table(group)
         zij <- zij * sqrt(n.group[group]/(n.group[group] - 1))
     }
-    colnames(vectors) <- names(eig) <- paste("PCoA", seq_along(eig), 
-        sep = "")
-    if (is.matrix(centroids)) 
+    colnames(vectors) <- names(eig) <- paste("PCoA", seq_along(eig), sep = "")
+    if (is.matrix(centroids))
         colnames(centroids) <- names(eig)
     else names(centroids) <- names(eig)
     rownames(vectors) <- names(zij) <- labs
-    retval <- list(eig = eig, vectors = vectors, distances = zij, 
-        group = group, centroids = centroids, call = match.call())
+    retval <- list(eig = eig, vectors = vectors, distances = zij, group = group, centroids = centroids, call = match.call())
     class(retval) <- "betadisper"
     attr(retval, "method") <- attr(d, "method")
     attr(retval, "type") <- type
