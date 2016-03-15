@@ -1,7 +1,6 @@
-dist.group.plot <-
-function(specialization, id, cex = 1, PCoA = c(1, 2), seg.col = "pink", seg.wd = 2, seg.lty = 1, pt.col = "red", pt.pch = 19, pt.cex = 1.5, x.lim = NULL, y.lim = NULL, plant.plot = "all.names", rel.pch = 19, rel.cex = 1.5, rel.col = "red", nrel.pch = 19, nrel.cex = 1.5, nrel.col= "red", verbose = TRUE, scaled = TRUE){
+dist.group.plot <- function(specialization, id, cex = 1, PCoA = c(1, 2), seg.col = "pink", seg.wd = 2, seg.lty = 1, pt.col = "red", pt.pch = 19, pt.cex = 1.5, x.lim = NULL, y.lim = NULL, plant.plot = "all.names", rel.pch = 19, rel.cex = 1.5, rel.col = "red", nrel.pch = 19, nrel.cex = 1.5, nrel.col= "red", verbose = TRUE, scaled = TRUE){
 
-	plot(specialization$plants.ord[, PCoA[1]], specialization$plants.ord[, PCoA[2]], type = "n", las = 1, xlab = paste("PCoA ", PCoA[1]), ylab= paste("PCoA ", PCoA[2]), main = "", ylim = y.lim, xlim =x.lim)
+plot(specialization$plants.ord[, PCoA[1]], specialization$plants.ord[, PCoA[2]], type = "n", las = 1, xlab = paste("PCoA ", PCoA[1]), ylab= paste("PCoA ", PCoA[2]), main = "", ylim = y.lim, xlim =x.lim)
 	if(verbose == TRUE){
 	mtext(paste("species", id,specialization$species[id]), line = 2)
 	if(scaled == TRUE){mtext(paste("#host plants:", sum(specialization$group.vectors[id, ] == TRUE),"   scaled host breadth:", round(specialization$sca[id], digits = 3)))} else {mtext(paste("#host plants:",sum(specialization$group.vectors[id, ] == TRUE),"   host breadth:",round(specialization$tot[id],digits = 3)))}
