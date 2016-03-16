@@ -9,6 +9,7 @@ Date: 2016-03-20
 Depends: vegan (>= 2.3-0)
 License: GPL (>= 3)
 LazyLoad: yes
+LazyData: true
 NeedsCompilation: no
 URL: https://github.com/butterflyology/ordiBreadth
 BugReports: https://github.com/butterflyology/ordiBreadth/issues

@@ -34,6 +34,7 @@ vignette: >
 #### The package comes with a data set called "Nymphalidae_list." These are the data from Hamm and Fordyce (2015) that were used in the *ordibreadth* paper by Fordyce et al. (2016).
 
 ```{r import-data}
+getwd
 library("ordiBreadth")
 data(Nymphalidae_list)
 head(Nymphalidae_list)
