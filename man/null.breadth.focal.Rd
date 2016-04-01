@@ -7,13 +7,13 @@ null.breadth.focal
 This function calculates the null expectation of ordinated host breadth for each herbivore individually. The ordination for each herbivore is based on PCoA where the focal herbivore is not included.
 }
 \usage{
-null.breadth.focal(dat, dis.method = "jaccard", reps = 100)
+null.breadth.focal(dat, dist.method = "jaccard", reps = 100)
 }
 \arguments{
   \item{dat}{
 A matrix of diet associations. Rows are herbivores and columns are diet items.
 }
-  \item{dis.method}{
+  \item{dist.method}{
 Dissimilarity index passed on to vegdist in the vegan package.
 }
   \item{reps}{

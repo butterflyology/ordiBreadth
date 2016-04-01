@@ -1,4 +1,4 @@
-null.breadth.focal <- function(dat, dis.method = "jaccard", reps = 100){
+null.breadth.focal <- function(dat, dist.method = "jaccard", reps = 100){
   res <- vector("list", dim(dat)[1])
 for(focal.bug in 1:dim(dat)[1]){
   cat("\n", focal.bug, "of", dim(dat)[1])

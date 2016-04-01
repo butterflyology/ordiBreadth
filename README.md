@@ -23,4 +23,9 @@
 | *Adelpha*| 0| 1| 0|
 |*Apaturopsis*| 0| 0| 1|
 |*Euripus*| 0| 0| 1|
+---
 
+#### 31 March 2016 
+Caught a typing inconsistency with the function null.breadth.focal. Was spelled "dis.method" and in the other function use "dist.method"
+
+Next too add an option to dist.group.plot to allow plotting only points for plants. 
