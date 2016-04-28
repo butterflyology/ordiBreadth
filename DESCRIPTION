@@ -14,5 +14,6 @@ NeedsCompilation: no
 URL: https://github.com/butterflyology/ordiBreadth
 BugReports: https://github.com/butterflyology/ordiBreadth/issues
 Suggests: knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
